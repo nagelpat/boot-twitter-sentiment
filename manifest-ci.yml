@@ -1,0 +1,27 @@
+---
+instances: 1
+applications:
+- name: visualizer
+  host: visualizer
+  path: ../boot-twitter-sentiment-built/boot-twitter-visualizer-0.0.1-SNAPSHOT.jar
+  memory: 512M
+  services:
+  - rabbit
+  - db
+- name: feeder
+  host: feeder
+  no-route: true
+  path: ../boot-twitter-sentiment-built/boot-twitter-feeder-0.0.1-SNAPSHOT.jar
+  memory: 1G
+  services:
+  - rabbit
+  - db
+
+# These remain here for documentation purposes, please add those to params.yml
+# and don't check them into git.
+env:
+  twitter_query: '#yourquery'
+  twitter_oauth_consumerKey: your_consumerKey
+  twitter_oauth_consumerSecret: you_consumerSecret
+  twitter_oauth_accessToken: your_accessToken
+  twitter_oauth_accessTokenSecret: your_accessTokenSecret
