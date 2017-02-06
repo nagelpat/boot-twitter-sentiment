@@ -6,13 +6,13 @@ resource_types:
       repository: hivelogic/cf-service-resource
 
 resources:
-- name: boot-twitter-sentiment
+- name: boot-twitter-sentiment-src
   type: git
   source:
     uri: {{git-uri}}
     branch: master
 
-- name: deployment
+- name: deployment-cf
   type: cf
   source:
     api: {{cf-api}}
@@ -21,7 +21,7 @@ resources:
     organization: {{cf-org}}
     space: {{cf-space}}
 
-- name: create-services
+- name: create-services-cf
   type: cf-service-resource
   source:
     api: {{cf-api}}
@@ -34,38 +34,38 @@ jobs:
 - name: test-app
   build_logs_to_retain: 5
   plan:
-  - get: boot-twitter-sentiment
+  - get: boot-twitter-sentiment-src
     trigger: true
   - task: test
-    file: boot-twitter-sentiment/ci/tasks/test.yml
+    file: boot-twitter-sentiment-src/ci/tasks/test.yml
 
 - name: package-app
   plan:
-  - get: boot-twitter-sentiment
+  - get: boot-twitter-sentiment-src
     trigger: true
     passed:
       - test-app
   - task: package
-    file: boot-twitter-sentiment/ci/tasks/package.yml
-  - put: create-services
+    file: boot-twitter-sentiment-src/ci/tasks/package.yml
+  - put: create-services-cf
     params:
-      manifest: boot-twitter-sentiment/manifest.yml
+      manifest: boot-twitter-sentiment-src/manifest.yml
       service: p-mysql
       plan: {{mysql-plan}}
       instance_name: db
       skip_restage: true
       skip_binding: true
-  - put: create-services
+  - put: create-services-cf
     params:
-      manifest: boot-twitter-sentiment/manifest.yml
+      manifest: boot-twitter-sentiment-src/manifest.yml
       service: p-rabbitmq
       plan: {{rabbit-plan}}
       instance_name: rabbit
       skip_restage: true
       skip_binding: true
-  - put: deployment
+  - put: deployment-cf
     params:
-      manifest: boot-twitter-sentiment/manifest-ci.yml
+      manifest: boot-twitter-sentiment-src/manifest-ci.yml
       environment_variables:
         twitter_query: {{twitter_query}}
         twitter_oauth_consumerKey: {{twitter_oauth_consumerKey}}
