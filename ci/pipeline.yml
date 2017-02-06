@@ -39,7 +39,7 @@ jobs:
   - task: test
     file: boot-twitter-sentiment/ci/tasks/test.yml
 
-- name: package
+- name: package-app
   plan:
   - get: boot-twitter-sentiment
     trigger: true
