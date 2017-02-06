@@ -8,11 +8,11 @@ image_resource:
     tag: alpine
 
 inputs:
-  - name: boot-twitter-sentiment
+  - name: boot-twitter-sentiment-src
 
 run:
   path: mvn
-  args: ["-f", "boot-twitter-sentiment/pom.xml", "test"]
+  args: ["-f", "boot-twitter-sentiment-src/pom.xml", "test"]
 
 params:
   TERM: -dumb
