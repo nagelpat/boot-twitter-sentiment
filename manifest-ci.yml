@@ -1,15 +1,13 @@
 ---
 instances: 1
 applications:
-- name: visualizer
-  host: visualizer-app
+- name: visualizer-ci
   path: ../boot-twitter-sentiment-built/boot-twitter-visualizer-0.0.1-SNAPSHOT.jar
   memory: 512M
   services:
   - rabbit
   - db
-- name: feeder
-  host: feeder
+- name: feeder-ci
   no-route: true
   path: ../boot-twitter-sentiment-built/boot-twitter-feeder-0.0.1-SNAPSHOT.jar
   memory: 1G
