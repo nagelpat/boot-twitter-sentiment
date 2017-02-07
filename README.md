@@ -1,6 +1,6 @@
 # boot-twitter-sentiment
 
-Project: Pivotal CF natural language processing (NLP) of twitter tweets.
+Project: Pivotal CF natural language processing (NLP) of twitter tweeets.
 
 ![GitHub Logo](/images/twitter.png)
 
